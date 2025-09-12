@@ -1,32 +1,190 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Свет Внутри</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свет Внутри - Христианская платформа</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Arial', sans-serif; 
-            text-align: center; 
-            padding: 50px; 
-            background: #f8f9fa; 
-            color: #333; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        h1 { color: #2c3e50; }
-        .container { 
-            max-width: 600px; 
-            margin: 0 auto; 
-            background: white; 
-            padding: 30px; 
-            border-radius: 10px; 
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #f8f8f8;
+            line-height: 1.6;
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+        
+        .countdown {
+            margin: 30px 0;
+            font-size: 1.3rem;
+        }
+        
+        .countdown-number {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            min-width: 70px;
+        }
+        
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        
+        .contact {
+            margin-top: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .social-links {
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #fdbb2d;
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.2rem; }
+            .message { font-size: 1rem; }
+            .countdown { font-size: 1rem; }
+            .countdown-number { margin: 5px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🕯 Свет Внутри</h1>
-        <p>Христианская платформа для молитвы и изучения веры</p>
-        <p><em>Сайт в разработке... Скоро здесь появится добро</em></p>
+        <div class="icon">✝</div>
+        <h1>Свет Внутри</h1>
+        <div class="subtitle">
+            Христианская платформа для молитвы и изучения веры
+        </div>
+        
+        <div class="message">
+            Сайт в разработке... Скоро здесь появится добро
+        </div>
+        
+        <div class="countdown">
+            <div>До открытия осталось:</div>
+            <div>
+                <span class="countdown-number" id="days">00</span>
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-number" id="seconds">00</span>
+            </div>
+        </div>
+        
+        <div class="contact">
+            <p>Следите за нашими обновлениями</p>
+            <div class="social-links">
+                <a href="#" title="ВКонтакте">📱</a>
+                <a href="#" title="Telegram">✉️</a>
+                <a href="#" title="Instagram">📸</a>
+            </div>
+        </div>
     </div>
+
+    <script>
+        // Установите дату запуска сайта (год, месяц (0-11), день)
+        const launchDate = new Date(2024, 11, 1); // 1 декабря 2024
+        
+        function updateCountdown() {
+            const now = new Date();
+            const difference = launchDate - now;
+            
+            if (difference <= 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+            
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // Обновляем счетчик каждую секунду
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Инициализация
+    </script>
 </body>
 </html>
