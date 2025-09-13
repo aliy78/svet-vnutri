@@ -80,6 +80,13 @@
             min-width: 70px;
         }
         
+        .countdown-label {
+            display: block;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+        
         .icon {
             font-size: 4rem;
             margin-bottom: 20px;
@@ -107,6 +114,7 @@
             margin: 0 10px;
             text-decoration: none;
             transition: all 0.3s ease;
+            display: inline-block;
         }
         
         .social-links a:hover {
@@ -114,12 +122,84 @@
             transform: translateY(-3px);
         }
         
+        .subscribe-form {
+            margin: 30px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        input[type="email"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            background: #fdbb2d;
+            color: #1a2a6c;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #ffcc40;
+            transform: translateY(-2px);
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        
+        .feature {
+            flex: 1 1 200px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .notification {
+            display: none;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: rgba(0, 200, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
             .subtitle { font-size: 1.2rem; }
             .message { font-size: 1rem; }
             .countdown { font-size: 1rem; }
-            .countdown-number { margin: 5px; }
+            .countdown-number { 
+                margin: 5px; 
+                min-width: 60px;
+            }
+            .features {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -132,25 +212,68 @@
         </div>
         
         <div class="message">
-            Сайт в разработке... Скоро здесь появится добро
+            Мы создаем пространство, где вы сможете углубиться в веру, найти поддержку сообщества и укрепить свою связь с Богом. Скоро здесь появится добро!
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">📖</div>
+                <h3>Библиотека</h3>
+                <p>Духовная литература и изучение Писания</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🙏</div>
+                <h3>Молитвы</h3>
+                <p>Молитвенные руководства и поддержка</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">👥</div>
+                <h3>Сообщество</h3>
+                <p>Общение с единомышленниками</p>
+            </div>
         </div>
         
         <div class="countdown">
             <div>До открытия осталось:</div>
             <div>
-                <span class="countdown-number" id="days">00</span>
-                <span class="countdown-number" id="hours">00</span>
-                <span class="countdown-number" id="minutes">00</span>
-                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-number">
+                    <span id="days">00</span>
+                    <span class="countdown-label">дней</span>
+                </span>
+                <span class="countdown-number">
+                    <span id="hours">00</span>
+                    <span class="countdown-label">часов</span>
+                </span>
+                <span class="countdown-number">
+                    <span id="minutes">00</span>
+                    <span class="countdown-label">минут</span>
+                </span>
+                <span class="countdown-number">
+                    <span id="seconds">00</span>
+                    <span class="countdown-label">секунд</span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="subscribe-form">
+            <h3>Узнайте о запуске первыми</h3>
+            <form id="subscription-form">
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Ваш email" required>
+                </div>
+                <button type="submit">Подписаться</button>
+            </form>
+            <div id="notification" class="notification">
+                Спасибо! Мы сообщим вам о запуске проекта.
             </div>
         </div>
         
         <div class="contact">
             <p>Следите за нашими обновлениями</p>
             <div class="social-links">
-                <a href="#" title="ВКонтакте">📱</a>
-                <a href="#" title="Telegram">✉️</a>
-                <a href="#" title="Instagram">📸</a>
+                <a href="#" title="ВКонтакте">📱 ВК</a>
+                <a href="#" title="Telegram">✉️ Telegram</a>
+                <a href="#" title="Instagram">📸 Instagram</a>
             </div>
         </div>
     </div>
@@ -181,6 +304,22 @@
             document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
+        
+        // Обработка формы подписки
+        document.getElementById('subscription-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            // Здесь будет код для отправки email на сервер
+            // Временно просто покажем уведомление
+            document.getElementById('notification').style.display = 'block';
+            document.getElementById('email').value = '';
+            
+            // Скрываем уведомление через 5 секунд
+            setTimeout(() => {
+                document.getElementById('notification').style.display = 'none';
+            }, 5000);
+        });
         
         // Обновляем счетчик каждую секунду
         setInterval(updateCountdown, 1000);
