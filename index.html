@@ -276,6 +276,36 @@
             background: rgba(253, 187, 45, 0.2);
         }
         
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loader .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #fdbb2d;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            display: none;
+            color: #ff6b6b;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
         @media (max-width: 768px) {
             .bible-container {
                 flex-direction: column;
@@ -322,8 +352,8 @@
             <p>Читайте Библию онлайн, ищите стихи и сохраняйте свои любимые места</p>
             
             <div class="search-box">
-                <input type="text" placeholder="Поиск по Библии...">
-                <button><i class="fas fa-search"></i> Найти</button>
+                <input type="text" id="bible-search" placeholder="Поиск по Библии...">
+                <button onclick="searchBible()"><i class="fas fa-search"></i> Найти</button>
             </div>
             
             <div class="bible-container">
@@ -331,36 +361,36 @@
                     <div class="book-category">
                         <h3>Ветхий Завет <i class="fas fa-chevron-down"></i></h3>
                         <div class="book-list">
-                            <div class="book-item">Бытие</div>
-                            <div class="book-item">Исход</div>
-                            <div class="book-item">Левит</div>
-                            <div class="book-item">Числа</div>
-                            <div class="book-item">Второзаконие</div>
-                            <div class="book-item">Иисус Навин</div>
-                            <div class="book-item">Псалтирь</div>
-                            <div class="book-item">Притчи</div>
-                            <div class="book-item">Исаия</div>
-                            <div class="book-item">Иеремия</div>
-                            <div class="book-item">Иезекииль</div>
-                            <div class="book-item">Даниил</div>
+                            <div class="book-item" data-id="GEN">Бытие</div>
+                            <div class="book-item" data-id="EXO">Исход</div>
+                            <div class="book-item" data-id="LEV">Левит</div>
+                            <div class="book-item" data-id="NUM">Числа</div>
+                            <div class="book-item" data-id="DEU">Второзаконие</div>
+                            <div class="book-item" data-id="JOS">Иисус Навин</div>
+                            <div class="book-item" data-id="PSA">Псалтирь</div>
+                            <div class="book-item" data-id="PRO">Притчи</div>
+                            <div class="book-item" data-id="ISA">Исаия</div>
+                            <div class="book-item" data-id="JER">Иеремия</div>
+                            <div class="book-item" data-id="EZK">Иезекииль</div>
+                            <div class="book-item" data-id="DAN">Даниил</div>
                         </div>
                     </div>
                     
                     <div class="book-category">
                         <h3>Новый Завет <i class="fas fa-chevron-down"></i></h3>
                         <div class="book-list">
-                            <div class="book-item active">Евангелие от Матфея</div>
-                            <div class="book-item">Евангелие от Марка</div>
-                            <div class="book-item">Евангелие от Луки</div>
-                            <div class="book-item">Евангелие от Иоанна</div>
-                            <div class="book-item">Деяния</div>
-                            <div class="book-item">Римлянам</div>
-                            <div class="book-item">1 Коринфянам</div>
-                            <div class="book-item">Галатам</div>
-                            <div class="book-item">Ефесянам</div>
-                            <div class="book-item">Филиппийцам</div>
-                            <div class="book-item">Колоссянам</div>
-                            <div class="book-item">Откровение</div>
+                            <div class="book-item active" data-id="MAT">Евангелие от Матфея</div>
+                            <div class="book-item" data-id="MRK">Евангелие от Марка</div>
+                            <div class="book-item" data-id="LUK">Евангелие от Луки</div>
+                            <div class="book-item" data-id="JHN">Евангелие от Иоанна</div>
+                            <div class="book-item" data-id="ACT">Деяния</div>
+                            <div class="book-item" data-id="ROM">Римлянам</div>
+                            <div class="book-item" data-id="1CO">1 Коринфянам</div>
+                            <div class="book-item" data-id="GAL">Галатам</div>
+                            <div class="book-item" data-id="EPH">Ефесянам</div>
+                            <div class="book-item" data-id="PHP">Филиппийцам</div>
+                            <div class="book-item" data-id="COL">Колоссянам</div>
+                            <div class="book-item" data-id="REV">Откровение</div>
                         </div>
                     </div>
                 </div>
@@ -368,74 +398,36 @@
                 <div class="bible-reader">
                     <div class="bible-header">
                         <div class="chapter-info">
-                            <h3>Евангелие от Матфея, Глава 1</h3>
+                            <h3 id="chapter-title">Евангелие от Матфея, Глава 1</h3>
                         </div>
                         <div class="chapter-navigation">
-                            <button class="nav-button"><i class="fas fa-arrow-left"></i></button>
-                            <span>Глава 1</span>
-                            <button class="nav-button"><i class="fas fa-arrow-right"></i></button>
-                            <button class="bookmark-button"><i class="far fa-bookmark"></i> Закладка</button>
+                            <button class="nav-button" id="prev-chapter"><i class="fas fa-arrow-left"></i></button>
+                            <span id="current-chapter">Глава 1</span>
+                            <button class="nav-button" id="next-chapter"><i class="fas fa-arrow-right"></i></button>
+                            <button class="bookmark-button" id="add-bookmark"><i class="far fa-bookmark"></i> Закладка</button>
                         </div>
                     </div>
                     
-                    <div class="bible-content">
-                        <div class="verse">
-                            <span class="verse-number">1</span>
-                            <span class="verse-text">Родословие Иисуса Христа, Сына Давидова, Сына Авраамова.</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">2</span>
-                            <span class="verse-text">Авраам родил Исаака; Исаак родил Иакова; Иаков родил Иуду и братьев его;</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">3</span>
-                            <span class="verse-text">Иуда родил Фареса и Зару от Фамари; Фарес родил Есрома; Есром родил Арама;</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">4</span>
-                            <span class="verse-text">Арам родил Аминадава; Аминадав родил Наассона; Наассон родил Салмона;</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">5</span>
-                            <span class="verse-text">Салмон родил Вооза от Рахавы; Вооз родил Овида от Руфи; Овид родил Иессея;</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">6</span>
-                            <span class="verse-text">Иессей родил Давида царя; Давид царь родил Соломона от бывшей за Уриею;</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">18</span>
-                            <span class="verse-text">Рождество Иисуса Христа было так: по обручении Матери Его Марии с Иосифом, прежде нежели сочетались они, оказалось, что Она имеет во чреве от Духа Святаго.</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">19</span>
-                            <span class="verse-text">Иосиф же муж Ее, будучи праведен и не желая огласить Ее, хотел тайно отпустить Ее.</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">20</span>
-                            <span class="verse-text">Но когда он помыслил это, — се, Ангел Господень явился ему во сне и сказал: Иосиф, сын Давидов! не бойся принять Марию, жену твою, ибо родившееся в Ней есть от Духа Святаго;</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">21</span>
-                            <span class="verse-text">родит же Сына, и наречешь Ему имя Иисус, ибо Он спасет людей Своих от грехов их.</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">22</span>
-                            <span class="verse-text">А все сие произошло, да сбудется реченное Господом через пророка, который говорит:</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">23</span>
-                            <span class="verse-text">се, Дева во чреве приимет и родит Сына, и нарекут имя Ему Еммануил, что значит: с нами Бог.</span>
-                        </div>
+                    <div class="loader" id="loader">
+                        <div class="spinner"></div>
+                        <p>Загрузка текста...</p>
+                    </div>
+                    
+                    <div class="error-message" id="error-message">
+                        Произошла ошибка при загрузке текста. Пожалуйста, попробуйте позже.
+                    </div>
+                    
+                    <div class="bible-content" id="bible-content">
+                        <!-- Содержимое Библии будет загружено здесь -->
                     </div>
                 </div>
             </div>
             
             <div class="bookmarks-panel">
                 <h3><i class="fas fa-bookmark"></i> Ваши закладки</h3>
-                <div class="bookmark-item">Евангелие от Иоанна 3:16</div>
-                <div class="bookmark-item">Псалтирь 22:1</div>
-                <div class="bookmark-item">1 Коринфянам 13:4-7</div>
+                <div id="bookmarks-list">
+                    <!-- Закладки будут загружены здесь -->
+                </div>
             </div>
         </div>
         
@@ -452,6 +444,13 @@
     </div>
 
     <script>
+        // Текущее состояние приложения
+        let currentState = {
+            bookId: 'MAT',
+            chapter: 1,
+            bookName: 'Евангелие от Матфея'
+        };
+        
         // Навигация между разделами
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
@@ -482,24 +481,33 @@
                 });
                 this.classList.add('active');
                 
-                // Здесь будет код для загрузки выбранной книги
-                const bookName = this.textContent;
-                document.querySelector('.chapter-info h3').textContent = `${bookName}, Глава 1`;
+                // Обновляем текущее состояние
+                currentState.bookId = this.getAttribute('data-id');
+                currentState.bookName = this.textContent;
+                currentState.chapter = 1;
+                
+                // Загружаем первую главу выбранной книги
+                loadChapter(currentState.bookId, currentState.chapter);
             });
         });
         
         // Навигация по главам
-        document.querySelectorAll('.nav-button').forEach(button => {
-            button.addEventListener('click', function() {
-                // Здесь будет код для перехода между главами
-                alert('Навигация по главам будет реализована в полной версии');
-            });
+        document.getElementById('prev-chapter').addEventListener('click', function() {
+            if (currentState.chapter > 1) {
+                currentState.chapter--;
+                loadChapter(currentState.bookId, currentState.chapter);
+            }
+        });
+        
+        document.getElementById('next-chapter').addEventListener('click', function() {
+            // В реальном приложении нужно проверять, есть ли следующая глава
+            currentState.chapter++;
+            loadChapter(currentState.bookId, currentState.chapter);
         });
         
         // Добавление закладок
-        document.querySelector('.bookmark-button').addEventListener('click', function() {
-            // Здесь будет код для добавления закладок
-            alert('Закладка добавлена!');
+        document.getElementById('add-bookmark').addEventListener('click', function() {
+            addBookmark(currentState.bookId, currentState.chapter, currentState.bookName);
         });
         
         // Раскрытие/сворачивание списков книг
@@ -518,6 +526,215 @@
                     icon.classList.add('fa-chevron-right');
                 }
             });
+        });
+        
+        // Функция для загрузки главы из API
+        async function loadChapter(bookId, chapter) {
+            // Показываем индикатор загрузки
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('bible-content').innerHTML = '';
+            
+            try {
+                // Обновляем заголовок
+                document.getElementById('chapter-title').textContent = `${currentState.bookName}, Глава ${chapter}`;
+                document.getElementById('current-chapter').textContent = `Глава ${chapter}`;
+                
+                // Используем API для получения текста Библии
+                // В данном примере используется API Bible Gateway, но для продакшена нужно получить собственный API ключ
+                const response = await fetch(`https://bible-api.com/${bookId}+${chapter}?translation=rst`);
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка загрузки главы');
+                }
+                
+                const data = await response.json();
+                
+                // Отображаем текст
+                let html = '';
+                data.verses.forEach(verse => {
+                    html += `
+                        <div class="verse">
+                            <span class="verse-number">${verse.verse}</span>
+                            <span class="verse-text">${verse.text}</span>
+                        </div>
+                    `;
+                });
+                
+                document.getElementById('bible-content').innerHTML = html;
+                
+            } catch (error) {
+                console.error('Ошибка при загрузке текста:', error);
+                document.getElementById('error-message').style.display = 'block';
+                
+                // В случае ошибки показываем демо-текст
+                document.getElementById('bible-content').innerHTML = `
+                    <div class="verse">
+                        <span class="verse-number">1</span>
+                        <span class="verse-text">В начале сотворил Бог небо и землю.</span>
+                    </div>
+                    <div class="verse">
+                        <span class="verse-number">2</span>
+                        <span class="verse-text">Земля же была безвидна и пуста, и тьма над бездною, и Дух Божий носился над водою.</span>
+                    </div>
+                    <div class="verse">
+                        <span class="verse-number">3</span>
+                        <span class="verse-text">И сказал Бог: да будет свет. И стал свет.</span>
+                    </div>
+                `;
+            } finally {
+                // Скрываем индикатор загрузки
+                document.getElementById('loader').style.display = 'none';
+            }
+        }
+        
+        // Функция для поиска по Библии
+        async function searchBible() {
+            const query = document.getElementById('bible-search').value.trim();
+            
+            if (!query) return;
+            
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            
+            try {
+                // Используем API для поиска
+                const response = await fetch(`https://bible-api.com/?search=${encodeURIComponent(query)}&translation=rst`);
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка поиска');
+                }
+                
+                const data = await response.json();
+                
+                // Отображаем результаты поиска
+                let html = '<h3>Результаты поиска:</h3>';
+                
+                if (data.verses && data.verses.length > 0) {
+                    data.verses.forEach(verse => {
+                        html += `
+                            <div class="verse">
+                                <span class="verse-number">${verse.book_name} ${verse.chapter}:${verse.verse}</span>
+                                <span class="verse-text">${verse.text}</span>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html += '<p>По вашему запросу ничего не найдено.</p>';
+                }
+                
+                document.getElementById('bible-content').innerHTML = html;
+                
+            } catch (error) {
+                console.error('Ошибка при поиске:', error);
+                document.getElementById('error-message').style.display = 'block';
+            } finally {
+                document.getElementById('loader').style.display = 'none';
+            }
+        }
+        
+        // Функция для добавления закладки
+        function addBookmark(bookId, chapter, bookName) {
+            // Получаем существующие закладки из localStorage
+            let bookmarks = JSON.parse(localStorage.getItem('bibleBookmarks')) || [];
+            
+            // Проверяем, нет ли уже такой закладки
+            const existingIndex = bookmarks.findIndex(b => b.bookId === bookId && b.chapter === chapter);
+            
+            if (existingIndex === -1) {
+                // Добавляем новую закладку
+                bookmarks.push({
+                    bookId,
+                    chapter,
+                    bookName,
+                    date: new Date().toLocaleDateString('ru-RU')
+                });
+                
+                // Сохраняем обратно в localStorage
+                localStorage.setItem('bibleBookmarks', JSON.stringify(bookmarks));
+                
+                // Обновляем список закладок
+                updateBookmarksList();
+                
+                alert('Закладка добавлена!');
+            } else {
+                alert('Эта глава уже в закладках!');
+            }
+        }
+        
+        // Функция для обновления списка закладок
+        function updateBookmarksList() {
+            const bookmarks = JSON.parse(localStorage.getItem('bibleBookmarks')) || [];
+            const bookmarksList = document.getElementById('bookmarks-list');
+            
+            if (bookmarks.length === 0) {
+                bookmarksList.innerHTML = '<p>У вас пока нет закладок</p>';
+                return;
+            }
+            
+            let html = '';
+            bookmarks.forEach((bookmark, index) => {
+                html += `
+                    <div class="bookmark-item" data-index="${index}">
+                        ${bookmark.bookName}, Глава ${bookmark.chapter}
+                        <span style="font-size: 0.8rem; opacity: 0.7;">(${bookmark.date})</span>
+                        <button onclick="removeBookmark(${index})" style="float: right; background: none; border: none; color: #ff6b6b; cursor: pointer;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            bookmarksList.innerHTML = html;
+            
+            // Добавляем обработчики клика на закладки
+            document.querySelectorAll('.bookmark-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'I') {
+                        const index = this.getAttribute('data-index');
+                        const bookmark = bookmarks[index];
+                        
+                        // Загружаем закладку
+                        currentState.bookId = bookmark.bookId;
+                        currentState.chapter = bookmark.chapter;
+                        currentState.bookName = bookmark.bookName;
+                        
+                        // Обновляем активную книгу в списке
+                        document.querySelectorAll('.book-item').forEach(bookItem => {
+                            bookItem.classList.remove('active');
+                            if (bookItem.getAttribute('data-id') === bookmark.bookId) {
+                                bookItem.classList.add('active');
+                            }
+                        });
+                        
+                        // Загружаем главу
+                        loadChapter(bookmark.bookId, bookmark.chapter);
+                    }
+                });
+            });
+        }
+        
+        // Функция для удаления закладки
+        function removeBookmark(index) {
+            let bookmarks = JSON.parse(localStorage.getItem('bibleBookmarks')) || [];
+            
+            if (index >= 0 && index < bookmarks.length) {
+                bookmarks.splice(index, 1);
+                localStorage.setItem('bibleBookmarks', JSON.stringify(bookmarks));
+                updateBookmarksList();
+            }
+            
+            // Останавливаем всплытие события, чтобы не triggered переход по закладке
+            event.stopPropagation();
+        }
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем первую главу Матфея
+            loadChapter('MAT', 1);
+            
+            // Загружаем закладки
+            updateBookmarksList();
         });
     </script>
 </body>
