@@ -19,9 +19,6 @@
             animation: gradientBG 15s ease infinite;
             color: #fff;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             text-align: center;
             padding: 20px;
         }
@@ -33,13 +30,18 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1000px;
+            margin: 0 auto;
             background: rgba(0, 0, 0, 0.7);
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        header {
+            margin-bottom: 30px;
         }
         
         h1 {
@@ -55,6 +57,41 @@
             margin-bottom: 30px;
             color: #f8f8f8;
             line-height: 1.6;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-item {
+            margin: 0 15px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background: rgba(253, 187, 45, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .message {
@@ -188,6 +225,75 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
+        /* Стили для раздела с цитатами */
+        .quote-section {
+            padding: 20px;
+        }
+        
+        .quote-of-the-day {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .quote-text {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .quote-reference {
+            font-size: 1.2rem;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .share-button {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .share-button:hover {
+            background: rgba(253, 187, 45, 0.3);
+        }
+        
+        .previous-quotes {
+            margin-top: 40px;
+        }
+        
+        .quote-history {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .quote-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            text-align: left;
+        }
+        
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
             .subtitle { font-size: 1.2rem; }
@@ -200,71 +306,144 @@
             .features {
                 flex-direction: column;
             }
+            .nav-item {
+                margin: 5px;
+            }
+            .quote-text {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="icon">✝</div>
-        <h1>Свет Внутри</h1>
-        <div class="subtitle">
-            Христианская платформа для молитвы и изучения веры
+        <header>
+            <div class="icon">✝</div>
+            <h1>Свет Внутри</h1>
+            <div class="subtitle">
+                Христианская платформа для молитвы и изучения веры
+            </div>
+        </header>
+        
+        <div class="nav">
+            <div class="nav-item active" data-target="main">Главная</div>
+            <div class="nav-item" data-target="quote">Цитата дня</div>
+            <div class="nav-item" data-target="about">О проекте</div>
         </div>
         
-        <div class="message">
-            Мы создаем пространство, где вы сможете углубиться в веру, найти поддержку сообщества и укрепить свою связь с Богом. Скоро здесь появится добро!
-        </div>
-        
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">📖</div>
-                <h3>Библиотека</h3>
-                <p>Духовная литература и изучение Писания</p>
+        <div class="section active" id="main-section">
+            <div class="message">
+                Мы создаем пространство, где вы сможете углубиться в веру, найти поддержку сообщества и укрепить свою связь с Богом. Скоро здесь появится добро!
             </div>
-            <div class="feature">
-                <div class="feature-icon">🙏</div>
-                <h3>Молитвы</h3>
-                <p>Молитвенные руководства и поддержка</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">👥</div>
-                <h3>Сообщество</h3>
-                <p>Общение с единомышленниками</p>
-            </div>
-        </div>
-        
-        <div class="countdown">
-            <div>До открытия осталось:</div>
-            <div>
-                <span class="countdown-number">
-                    <span id="days">00</span>
-                    <span class="countdown-label">дней</span>
-                </span>
-                <span class="countdown-number">
-                    <span id="hours">00</span>
-                    <span class="countdown-label">часов</span>
-                </span>
-                <span class="countdown-number">
-                    <span id="minutes">00</span>
-                    <span class="countdown-label">минут</span>
-                </span>
-                <span class="countdown-number">
-                    <span id="seconds">00</span>
-                    <span class="countdown-label">секунд</span>
-                </span>
-            </div>
-        </div>
-        
-        <div class="subscribe-form">
-            <h3>Узнайте о запуске первыми</h3>
-            <form id="subscription-form">
-                <div class="form-group">
-                    <input type="email" id="email" placeholder="Ваш email" required>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">📖</div>
+                    <h3>Библиотека</h3>
+                    <p>Духовная литература и изучение Писания</p>
                 </div>
-                <button type="submit">Подписаться</button>
-            </form>
-            <div id="notification" class="notification">
-                Спасибо! Мы сообщим вам о запуске проекта.
+                <div class="feature">
+                    <div class="feature-icon">🙏</div>
+                    <h3>Молитвы</h3>
+                    <p>Молитвенные руководства и поддержка</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">👥</div>
+                    <h3>Сообщество</h3>
+                    <p>Общение с единомышленниками</p>
+                </div>
+            </div>
+            
+            <div class="countdown">
+                <div>До открытия осталось:</div>
+                <div>
+                    <span class="countdown-number">
+                        <span id="days">00</span>
+                        <span class="countdown-label">дней</span>
+                    </span>
+                    <span class="countdown-number">
+                        <span id="hours">00</span>
+                        <span class="countdown-label">часов</span>
+                    </span>
+                    <span class="countdown-number">
+                        <span id="minutes">00</span>
+                        <span class="countdown-label">минут</span>
+                    </span>
+                    <span class="countdown-number">
+                        <span id="seconds">00</span>
+                        <span class="countdown-label">секунд</span>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="subscribe-form">
+                <h3>Узнайте о запуске первыми</h3>
+                <form id="subscription-form">
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Ваш email" required>
+                    </div>
+                    <button type="submit">Подписаться</button>
+                </form>
+                <div id="notification" class="notification">
+                    Спасибо! Мы сообщим вам о запуске проекта.
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="quote-section">
+            <div class="quote-of-the-day">
+                <div class="quote-text" id="daily-quote">
+                    "Ибо так возлюбил Бог мир, что отдал Сына Своего Единородного, дабы всякий верующий в Него не погиб, но имел жизнь вечную."
+                </div>
+                <div class="quote-reference" id="quote-ref">Иоанна 3:16</div>
+                <div class="date-display" id="quote-date">20 сентября 2023</div>
+                
+                <div class="share-buttons">
+                    <div class="share-button" onclick="shareQuote('vk')">
+                        <span>ВК</span>
+                    </div>
+                    <div class="share-button" onclick="shareQuote('telegram')">
+                        <span>Telegram</span>
+                    </div>
+                    <div class="share-button" onclick="shareQuote('whatsapp')">
+                        <span>WhatsApp</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="previous-quotes">
+                <h3>Предыдущие цитаты</h3>
+                <div class="quote-history" id="quote-history">
+                    <div class="quote-item">
+                        <div class="quote-text">"Не заботьтесь ни о чем, но всегда в молитве и прошении с благодарением открывайте свои желания пред Богом."</div>
+                        <div class="quote-reference">Филиппийцам 4:6</div>
+                        <div class="quote-date">19 сентября 2023</div>
+                    </div>
+                    <div class="quote-item">
+                        <div class="quote-text">"Всякое даяние доброе и всякий дар совершенный нисходит свыше, от Отца светов."</div>
+                        <div class="quote-reference">Иакова 1:17</div>
+                        <div class="quote-date">18 сентября 2023</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="about-section">
+            <div class="message">
+                <h2>О проекте "Свет Внутри"</h2>
+                <p>"Свет Внутри" - это христианская платформа, созданная для того, чтобы помочь людям укрепить свою веру, найти духовную поддержку и углубить отношения с Богом.</p>
+                <p>Наша миссия - нести свет Евангелия в сердца людей и создавать сообщество верующих, готовых поддерживать друг друга в духовном пути.</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>Наша цель</h3>
+                    <p>Создать пространство для молитвы, изучения Библии и общения христиан</p>
+                </div>
+                <div class="feature">
+                    <h3>Наши ценности</h3>
+                    <p>Вера, любовь, надежда и служение ближним</p>
+                </div>
             </div>
         </div>
         
@@ -320,6 +499,101 @@
                 document.getElementById('notification').style.display = 'none';
             }, 5000);
         });
+        
+        // Навигация между разделами
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Убираем активный класс у всех пунктов меню
+                document.querySelectorAll('.nav-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Добавляем активный класс к текущему пункту
+                this.classList.add('active');
+                
+                // Скрываем все разделы
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Показываем выбранный раздел
+                const targetId = this.getAttribute('data-target') + '-section';
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+        
+        // Библиотека библейских цитат
+        const bibleQuotes = [
+            {
+                text: "Ибо так возлюбил Бог мир, что отдал Сына Своего Единородного, дабы всякий верующий в Него не погиб, но имел жизнь вечную.",
+                reference: "Иоанна 3:16"
+            },
+            {
+                text: "Не заботьтесь ни о чем, но всегда в молитве и прошении с благодарением открывайте свои желания пред Богом.",
+                reference: "Филиппийцам 4:6"
+            },
+            {
+                text: "Всякое даяние доброе и всякий дар совершенный нисходит свыше, от Отца светов.",
+                reference: "Иакова 1:17"
+            },
+            {
+                text: "Бог есть свет, и нет в Нем никакой тьмы.",
+                reference: "1 Иоанна 1:5"
+            },
+            {
+                text: "Ищите прежде Царства Божия и правды Его, и это все приложится вам.",
+                reference: "Матфея 6:33"
+            },
+            {
+                text: "Все могу в укрепляющем меня Иисусе Христе.",
+                reference: "Филиппийцам 4:13"
+            },
+            {
+                text: "Не бойся, ибо Я с тобою; не смущайся, ибо Я Бог твой; Я укреплю тебя, и помогу тебе, и поддержу тебя десницею правды Моей.",
+                reference: "Исаия 41:10"
+            }
+        ];
+        
+        // Функция для установки цитаты дня
+        function setDailyQuote() {
+            // Используем текущую дату для выбора цитаты (гарантирует одинаковую цитату в течение дня)
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const quoteIndex = dayOfYear % bibleQuotes.length;
+            
+            const dailyQuote = bibleQuotes[quoteIndex];
+            document.getElementById('daily-quote').textContent = `"${dailyQuote.text}"`;
+            document.getElementById('quote-ref').textContent = dailyQuote.reference;
+            
+            // Форматируем дату
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('quote-date').textContent = today.toLocaleDateString('ru-RU', options);
+        }
+        
+        // Функция для "поделиться" цитатой
+        function shareQuote(platform) {
+            const quoteText = document.getElementById('daily-quote').textContent;
+            const quoteRef = document.getElementById('quote-ref').textContent;
+            const text = `${quoteText} (${quoteRef}) — разделено через "Свет Внутри"`;
+            
+            let url = '';
+            switch(platform) {
+                case 'vk':
+                    url = `https://vk.com/share.php?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(text)}`;
+                    break;
+                case 'telegram':
+                    url = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`;
+                    break;
+                case 'whatsapp':
+                    url = `https://wa.me/?text=${encodeURIComponent(text + ' ' + window.location.href)}`;
+                    break;
+            }
+            
+            window.open(url, '_blank');
+        }
+        
+        // Установка цитаты дня при загрузке страницы
+        setDailyQuote();
         
         // Обновляем счетчик каждую секунду
         setInterval(updateCountdown, 1000);
