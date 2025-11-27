@@ -1,890 +1,151 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Свет Внутри - Библия онлайн</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: #fff;
-            min-height: 100vh;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        header {
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: #fff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
-        
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            color: #f8f8f8;
-            line-height: 1.6;
-        }
-        
-        .nav {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .nav-item {
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-item:hover, .nav-item.active {
-            background: rgba(253, 187, 45, 0.3);
-            transform: translateY(-3px);
-        }
-        
-        .section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-            text-align: left;
-        }
-        
-        .section.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        /* Стили для раздела с Библией */
-        .bible-container {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            min-height: 500px;
-        }
-        
-        .books-sidebar {
-            width: 250px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            overflow-y: auto;
-        }
-        
-        .book-category {
-            margin-bottom: 15px;
-        }
-        
-        .book-category h3 {
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .book-list {
-            padding-left: 20px;
-        }
-        
-        .book-item {
-            padding: 8px 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .book-item:hover {
-            background: rgba(253, 187, 45, 0.2);
-        }
-        
-        .book-item.active {
-            background: rgba(253, 187, 45, 0.3);
-            font-weight: bold;
-        }
-        
-        .bible-reader {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .bible-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .chapter-navigation {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .nav-button {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-button:hover {
-            background: rgba(253, 187, 45, 0.3);
-        }
-        
-        .bible-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-            line-height: 1.8;
-            font-size: 1.1rem;
-            max-height: 400px;
-        }
-        
-        .verse {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            text-align: left;
-        }
-        
-        .verse:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .verse-number {
-            font-size: 0.8rem;
-            color: #fdbb2d;
-            font-weight: bold;
-            margin-right: 5px;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 2px 6px;
-            border-radius: 3px;
-        }
-        
-        .search-box {
-            display: flex;
-            margin-bottom: 20px;
-            gap: 10px;
-        }
-        
-        .search-box input {
-            flex: 1;
-            padding: 12px 15px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
-        }
-        
-        .search-box button {
-            background: #fdbb2d;
-            color: #1a2a6c;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .bookmark-button {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .bookmark-button:hover {
-            background: rgba(253, 187, 45, 0.3);
-        }
-        
-        .bookmarks-panel {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-        
-        .bookmark-item {
-            padding: 10px;
-            margin: 8px 0;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .bookmark-item:hover {
-            background: rgba(253, 187, 45, 0.2);
-        }
-        
-        .loader {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .loader .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 4px solid #fdbb2d;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .error-message {
-            display: none;
-            color: #ff6b6b;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            margin: 10px 0;
-            text-align: center;
-        }
-        
-        .fallback-content {
-            display: none;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-        
-        .translation-selector {
-            margin: 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .translation-selector select {
-            padding: 8px 15px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-        }
-        
-        @media (max-width: 768px) {
-            .bible-container {
-                flex-direction: column;
-            }
-            
-            .books-sidebar {
-                width: 100%;
-                max-height: 200px;
-            }
-            
-            h1 { font-size: 2.5rem; }
-            .subtitle { font-size: 1.2rem; }
-            
-            .bible-header {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .chapter-navigation {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Свет внутри</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    /* Звёзды на фоне */
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: 0;
+    }
+    .stars::before, .stars::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(white, transparent) repeat;
+      background-size: 3px 3px;
+      opacity: 0.6;
+      animation: twinkle 5s infinite alternate;
+    }
+    .stars::after {
+      background-size: 2px 2px;
+      opacity: 0.4;
+      animation-duration: 7s;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.3; }
+      to   { opacity: 0.8; }
+    }
+
+    /* Сияющий круг */
+    .orb {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fffacd, #ffd700, #000);
+      box-shadow: 0 0 80px 40px #ffd700;
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: scale(0.5);
+      animation: sunrise 6s forwards;
+    }
+
+    /* Ореол вокруг круга */
+    .halo {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,215,0,0.3), transparent 70%);
+      z-index: 1;
+      opacity: 0;
+      animation: sunrise 6s forwards, pulse 6s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); opacity: 0.4; }
+      to   { transform: scale(1.1); opacity: 0.7; }
+    }
+
+    /* Анимация восхода */
+    @keyframes sunrise {
+      0%   { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Кнопка звона для мобильных */
+    .bell-btn {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,215,0,0.15);
+      color: #ffd700;
+      border: 1px solid rgba(255,215,0,0.6);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 14px;
+      backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: opacity 0.6s ease;
+    }
+    .bell-btn.hidden { opacity: 0; pointer-events: none; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="icon">✝</div>
-            <h1>Свет Внутри</h1>
-            <div class="subtitle">
-                Христианская платформа для молитвы и изучения веры
-            </div>
-        </header>
-        
-        <div class="nav">
-            <div class="nav-item active" data-target="main">Главная</div>
-            <div class="nav-item" data-target="bible">Библия</div>
-            <div class="nav-item" data-target="quote">Цитата дня</div>
-            <div class="nav-item" data-target="about">О проекте</div>
-        </div>
-        
-        <div class="section active" id="main-section">
-            <div class="message">
-                Мы создаем пространство, где вы сможете углубиться в веру, найти поддержку сообщества и укрепить свою связь с Богом. Скоро здесь появится добро!
-            </div>
-            
-            <!-- Остальное содержимое главной страницы -->
-        </div>
-        
-        <div class="section" id="bible-section">
-            <h2>Священное Писание</h2>
-            <p>Читайте Библию онлайн, ищите стихи и сохраняйте свои любимые места</p>
-            
-            <div class="translation-selector">
-                <span>Перевод:</span>
-                <select id="translation">
-                    <option value="rst" selected>Синодальный</option>
-                    <option value="kjv">KJV (English)</option>
-                </select>
-            </div>
-            
-            <div class="search-box">
-                <input type="text" id="bible-search" placeholder="Введите фразу для поиска...">
-                <button onclick="searchBible()"><i class="fas fa-search"></i> Найти</button>
-            </div>
-            
-            <div class="bible-container">
-                <div class="books-sidebar">
-                    <div class="book-category">
-                        <h3>Ветхий Завет <i class="fas fa-chevron-down"></i></h3>
-                        <div class="book-list">
-                            <div class="book-item" data-id="gen">Бытие</div>
-                            <div class="book-item" data-id="exo">Исход</div>
-                            <div class="book-item" data-id="lev">Левит</div>
-                            <div class="book-item" data-id="num">Числа</div>
-                            <div class="book-item" data-id="deu">Второзаконие</div>
-                            <div class="book-item" data-id="jos">Иисус Навин</div>
-                            <div class="book-item" data-id="psa">Псалтирь</div>
-                            <div class="book-item" data-id="pro">Притчи</div>
-                            <div class="book-item" data-id="isa">Исаия</div>
-                            <div class="book-item" data-id="jer">Иеремия</div>
-                            <div class="book-item" data-id="eze">Иезекииль</div>
-                            <div class="book-item" data-id="dan">Даниил</div>
-                        </div>
-                    </div>
-                    
-                    <div class="book-category">
-                        <h3>Новый Завет <i class="fas fa-chevron-down"></i></h3>
-                        <div class="book-list">
-                            <div class="book-item active" data-id="mat">Евангелие от Матфея</div>
-                            <div class="book-item" data-id="mar">Евангелие от Марка</div>
-                            <div class="book-item" data-id="luk">Евангелие от Луки</div>
-                            <div class="book-item" data-id="joh">Евангелие от Иоанна</div>
-                            <div class="book-item" data-id="act">Деяния</div>
-                            <div class="book-item" data-id="rom">Римлянам</div>
-                            <div class="book-item" data-id="1co">1 Коринфянам</div>
-                            <div class="book-item" data-id="gal">Галатам</div>
-                            <div class="book-item" data-id="eph">Ефесянам</div>
-                            <div class="book-item" data-id="php">Филиппийцам</div>
-                            <div class="book-item" data-id="col">Колоссянам</div>
-                            <div class="book-item" data-id="rev">Откровение</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bible-reader">
-                    <div class="bible-header">
-                        <div class="chapter-info">
-                            <h3 id="chapter-title">Евангелие от Матфея, Глава 1</h3>
-                        </div>
-                        <div class="chapter-navigation">
-                            <button class="nav-button" id="prev-chapter"><i class="fas fa-arrow-left"></i></button>
-                            <span id="current-chapter">Глава 1</span>
-                            <button class="nav-button" id="next-chapter"><i class="fas fa-arrow-right"></i></button>
-                            <button class="bookmark-button" id="add-bookmark"><i class="far fa-bookmark"></i> Закладка</button>
-                        </div>
-                    </div>
-                    
-                    <div class="loader" id="loader">
-                        <div class="spinner"></div>
-                        <p>Загрузка текста...</p>
-                    </div>
-                    
-                    <div class="error-message" id="error-message">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Ошибка загрузки текста</h3>
-                        <p>Не удалось загрузить текст из онлайн-источника. Пожалуйста, проверьте подключение к интернету или попробуйте позже.</p>
-                        <p>Для продолжения работы используется локальная версия текста.</p>
-                    </div>
-                    
-                    <div class="bible-content" id="bible-content">
-                        <!-- Содержимое Библии будет загружено здесь -->
-                    </div>
-                    
-                    <div class="fallback-content" id="fallback-content">
-                        <h3>Евангелие от Матфея, Глава 1</h3>
-                        <div class="verse">
-                            <span class="verse-number">1</span>
-                            <span class="verse-text">Родословие Иисуса Христа, Сына Давидова, Сына Авраамова.</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">2</span>
-                            <span class="verse-text">Авраам родил Исаака; Исаак родил Иакова; Иаков родил Иуду и братьев его;</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">3</span>
-                            <span class="verse-text">Иуда родил Фареса и Зару от Фамари; Фарес родил Есрома; Есром родил Арама;</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">18</span>
-                            <span class="verse-text">Рождество Иисуса Христа было так: по обручении Матери Его Марии с Иосифом, прежде нежели сочетались они, оказалось, что Она имеет во чреве от Духа Святаго.</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">19</span>
-                            <span class="verse-text">Иосиф же муж Ее, будучи праведен и не желая огласить Ее, хотел тайно отпустить Ее.</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">20</span>
-                            <span class="verse-text">Но когда он помыслил это, — се, Ангел Господень явился ему во сне и сказал: Иосиф, сын Давидов! не бойся принять Марию, жену твою, ибо родившееся в Ней есть от Духа Святаго;</span>
-                        </div>
-                        <div class="verse">
-                            <span class="verse-number">21</span>
-                            <span class="verse-text">родит же Сына, и наречешь Ему имя Иисус, ибо Он спасет людей Своих от грехов их.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bookmarks-panel">
-                <h3><i class="fas fa-bookmark"></i> Ваши закладки</h3>
-                <div id="bookmarks-list">
-                    <p>У вас пока нет закладок</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Остальные разделы -->
-        
-        <div class="contact">
-            <p>Следите за нашими обновлениями</p>
-            <div class="social-links">
-                <a href="#" title="ВКонтакте"><i class="fab fa-vk"></i> ВК</a>
-                <a href="#" title="Telegram"><i class="fab fa-telegram"></i> Telegram</a>
-                <a href="#" title="Instagram"><i class="fab fa-instagram"></i> Instagram</a>
-            </div>
-        </div>
-    </div>
+  <div class="stars"></div>
+  <div class="halo"></div>
+  <div class="orb"></div>
 
-    <script>
-        // Текущее состояние приложения
-        let currentState = {
-            bookId: 'mat',
-            chapter: 1,
-            bookName: 'Евангелие от Матфея',
-            translation: 'rst'
-        };
-        
-        // Локальные тексты для основных глав (на случай ошибки API)
-        const fallbackTexts = {
-            'mat1': {
-                title: 'Евангелие от Матфея, Глава 1',
-                verses: [
-                    {verse: 1, text: 'Родословие Иисуса Христа, Сына Давидова, Сына Авраамова.'},
-                    {verse: 2, text: 'Авраам родил Исаака; Исаак родил Иакова; Иаков родил Иуду и братьев его;'},
-                    {verse: 3, text: 'Иуда родил Фареса и Зару от Фамари; Фарес родил Есрома; Есром родил Арама;'},
-                    {verse: 18, text: 'Рождество Иисуса Христа было так: по обручении Матери Его Марии с Иосифом, прежде нежели сочетались они, оказалось, что Она имеет во чреве от Духа Святаго.'},
-                    {verse: 19, text: 'Иосиф же муж Ее, будучи праведен и не желая огласить Ее, хотел тайно отпустить Ее.'},
-                    {verse: 20, text: 'Но когда он помыслил это, — се, Ангел Господень явился ему во сне и сказал: Иосиф, сын Давидов! не бойся принять Марию, жену твою, ибо родившееся в Ней есть от Духа Святаго;'},
-                    {verse: 21, text: 'родит же Сына, и наречешь Ему имя Иисус, ибо Он спасет людей Своих от грехов их.'}
-                ]
-            },
-            'joh3': {
-                title: 'Евангелие от Иоанна, Глава 3',
-                verses: [
-                    {verse: 1, text: 'Между фарисеями был некто именем Никодим, один из начальников Иудейских.'},
-                    {verse: 2, text: 'Он пришел к Иисусу ночью и сказал Ему: Равви! мы знаем, что Ты учитель, пришедший от Бога; ибо таких чудес, какие Ты творишь, никто не может творить, если не будет с ним Бог.'},
-                    {verse: 16, text: 'Ибо так возлюбил Бог мир, что отдал Сына Своего Единородного, дабы всякий верующий в Него не погиб, но имел жизнь вечную.'},
-                    {verse: 17, text: 'Ибо не послал Бог Сына Своего в мир, чтобы судить мир, но чтобы мир спасен был через Него.'}
-                ]
-            },
-            'psa23': {
-                title: 'Псалтирь, Псалом 22',
-                verses: [
-                    {verse: 1, text: 'Господь — Пастырь мой; я ни в чем не буду нуждаться:'},
-                    {verse: 2, text: 'Он покоит меня на злачных пажитях и водит меня к водам тихим,'},
-                    {verse: 3, text: 'подкрепляет душу мою, направляет меня на стези правды ради имени Своего.'},
-                    {verse: 4, text: 'Если я пойду и долиною смертной тени, не убоюсь зла, потому что Ты со мной; Твой жезл и Твой посох — они успокаивают меня.'}
-                ]
-            }
-        };
+  <!-- Звук: локальный файл assets/bells.mp3 -->
+  <audio id="bells" preload="auto">
+    <source src="assets/bells.mp3" type="audio/mpeg">
+  </audio>
 
-        // Навигация между разделами
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                // Убираем активный класс у всех пунктов меню
-                document.querySelectorAll('.nav-item').forEach(i => {
-                    i.classList.remove('active');
-                });
-                
-                // Добавляем активный класс к текущему пункту
-                this.classList.add('active');
-                
-                // Скрываем все разделы
-                document.querySelectorAll('.section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                
-                // Показываем выбранный раздел
-                const targetId = this.getAttribute('data-target') + '-section';
-                document.getElementById(targetId).classList.add('active');
-            });
-        });
-        
-        // Функционал для выбора книг Библии
-        document.querySelectorAll('.book-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.book-item').forEach(i => {
-                    i.classList.remove('active');
-                });
-                this.classList.add('active');
-                
-                // Обновляем текущее состояние
-                currentState.bookId = this.getAttribute('data-id');
-                currentState.bookName = this.textContent;
-                currentState.chapter = 1;
-                
-                // Загружаем первую главу выбранной книги
-                loadChapter(currentState.bookId, currentState.chapter);
-            });
-        });
-        
-        // Навигация по главам
-        document.getElementById('prev-chapter').addEventListener('click', function() {
-            if (currentState.chapter > 1) {
-                currentState.chapter--;
-                loadChapter(currentState.bookId, currentState.chapter);
-            }
-        });
-        
-        document.getElementById('next-chapter').addEventListener('click', function() {
-            currentState.chapter++;
-            loadChapter(currentState.bookId, currentState.chapter);
-        });
-        
-        // Добавление закладок
-        document.getElementById('add-bookmark').addEventListener('click', function() {
-            addBookmark(currentState.bookId, currentState.chapter, currentState.bookName);
-        });
-        
-        // Изменение перевода
-        document.getElementById('translation').addEventListener('change', function() {
-            currentState.translation = this.value;
-            loadChapter(currentState.bookId, currentState.chapter);
-        });
-        
-        // Раскрытие/сворачивание списков книб
-        document.querySelectorAll('.book-category h3').forEach(header => {
-            header.addEventListener('click', function() {
-                const list = this.nextElementSibling;
-                const icon = this.querySelector('i');
-                
-                if (list.style.display === 'none') {
-                    list.style.display = 'block';
-                    icon.classList.remove('fa-chevron-right');
-                    icon.classList.add('fa-chevron-down');
-                } else {
-                    list.style.display = 'none';
-                    icon.classList.remove('fa-chevron-down');
-                    icon.classList.add('fa-chevron-right');
-                }
-            });
-        });
-        
-        // Функция для загрузки главы
-        async function loadChapter(bookId, chapter) {
-            // Показываем индикатор загрузки
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('error-message').style.display = 'none';
-            document.getElementById('bible-content').innerHTML = '';
-            document.getElementById('fallback-content').style.display = 'none';
-            
-            try {
-                // Обновляем заголовок
-                document.getElementById('chapter-title').textContent = `${currentState.bookName}, Глава ${chapter}`;
-                document.getElementById('current-chapter').textContent = `Глава ${chapter}`;
-                
-                // Проверяем, есть ли локальная версия
-                const fallbackKey = `${bookId}${chapter}`;
-                if (fallbackTexts[fallbackKey]) {
-                    displayFallbackText(fallbackKey);
-                    document.getElementById('loader').style.display = 'none';
-                    return;
-                }
-                
-                // Используем API для получения текста Библии
-                const response = await fetch(`https://bible-api.com/${bookId}+${chapter}?translation=${currentState.translation}`);
-                
-                if (!response.ok) {
-                    throw new Error('Ошибка загрузки главы');
-                }
-                
-                const data = await response.json();
-                
-                // Отображаем текст
-                let html = '';
-                data.verses.forEach(verse => {
-                    html += `
-                        <div class="verse">
-                            <span class="verse-number">${verse.verse}</span>
-                            <span class="verse-text">${verse.text}</span>
-                        </div>
-                    `;
-                });
-                
-                document.getElementById('bible-content').innerHTML = html;
-                
-            } catch (error) {
-                console.error('Ошибка при загрузке текста:', error);
-                
-                // Показываем сообщение об ошибке
-                document.getElementById('error-message').style.display = 'block';
-                
-                // Пытаемся показать локальную версию, если есть
-                const fallbackKey = `${bookId}${chapter}`;
-                if (fallbackTexts[fallbackKey]) {
-                    displayFallbackText(fallbackKey);
-                } else {
-                    // Показываем заглушку, если нет локальной версии
-                    document.getElementById('bible-content').innerHTML = `
-                        <div class="verse">
-                            <span class="verse-text">Текст временно недоступен. Пожалуйста, попробуйте другую главу или проверьте подключение к интернету.</span>
-                        </div>
-                    `;
-                }
-            } finally {
-                // Скрываем индикатор загрузки
-                document.getElementById('loader').style.display = 'none';
-            }
-        }
-        
-        // Функция для отображения локального текста
-        function displayFallbackText(fallbackKey) {
-            const textData = fallbackTexts[fallbackKey];
-            document.getElementById('fallback-content').style.display = 'block';
-            document.getElementById('chapter-title').textContent = textData.title;
-            
-            let html = '';
-            textData.verses.forEach(verse => {
-                html += `
-                    <div class="verse">
-                        <span class="verse-number">${verse.verse}</span>
-                        <span class="verse-text">${verse.text}</span>
-                    </div>
-                `;
-            });
-            
-            document.getElementById('bible-content').innerHTML = html;
-        }
-        
-        // Функция для поиска по Библии
-        async function searchBible() {
-            const query = document.getElementById('bible-search').value.trim();
-            
-            if (!query) return;
-            
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('error-message').style.display = 'none';
-            
-            try {
-                // Используем API для поиска
-                const response = await fetch(`https://bible-api.com/?search=${encodeURIComponent(query)}&translation=${currentState.translation}`);
-                
-                if (!response.ok) {
-                    throw new Error('Ошибка поиска');
-                }
-                
-                const data = await response.json();
-                
-                // Отображаем результаты поиска
-                let html = '<h3>Результаты поиска:</h3>';
-                
-                if (data.verses && data.verses.length > 0) {
-                    data.verses.forEach(verse => {
-                        html += `
-                            <div class="verse">
-                                <span class="verse-number">${verse.book_name} ${verse.chapter}:${verse.verse}</span>
-                                <span class="verse-text">${verse.text}</span>
-                            </div>
-                        `;
-                    });
-                } else {
-                    html += '<p>По вашему запросу ничего не найдено.</p>';
-                }
-                
-                document.getElementById('bible-content').innerHTML = html;
-                
-            } catch (error) {
-                console.error('Ошибка при поиске:', error);
-                document.getElementById('error-message').style.display = 'block';
-                document.getElementById('bible-content').innerHTML = '<p>Поиск временно недоступен. Пожалуйста, попробуйте позже.</p>';
-            } finally {
-                document.getElementById('loader').style.display = 'none';
-            }
-        }
-        
-        // Функция для добавления закладки
-        function addBookmark(bookId, chapter, bookName) {
-            // Получаем существующие закладки из localStorage
-            let bookmarks = JSON.parse(localStorage.getItem('bibleBookmarks')) || [];
-            
-            // Проверяем, нет ли уже такой закладки
-            const existingIndex = bookmarks.findIndex(b => b.bookId === bookId && b.chapter === chapter);
-            
-            if (existingIndex === -1) {
-                // Добавляем новую закладку
-                bookmarks.push({
-                    bookId,
-                    chapter,
-                    bookName,
-                    date: new Date().toLocaleDateString('ru-RU')
-                });
-                
-                // Сохраняем обратно в localStorage
-                localStorage.setItem('bibleBookmarks', JSON.stringify(bookmarks));
-                
-                // Обновляем список закладок
-                updateBookmarksList();
-                
-                alert('Закладка добавлена!');
-            } else {
-                alert('Эта глава уже в закладках!');
-            }
-        }
-        
-        // Функция для обновления списка закладок
-        function updateBookmarksList() {
-            const bookmarks = JSON.parse(localStorage.getItem('bibleBookmarks')) || [];
-            const bookmarksList = document.getElementById('bookmarks-list');
-            
-            if (bookmarks.length === 0) {
-                bookmarksList.innerHTML = '<p>У вас пока нет закладок</p>';
-                return;
-            }
-            
-            let html = '';
-            bookmarks.forEach((bookmark, index) => {
-                html += `
-                    <div class="bookmark-item" data-index="${index}">
-                        <span>${bookmark.bookName}, Глава ${bookmark.chapter}</span>
-                        <span style="font-size: 0.8rem; opacity: 0.7;">${bookmark.date}</span>
-                        <button onclick="removeBookmark(${index})" style="background: none; border: none; color: #ff6b6b; cursor: pointer;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `;
-            });
-            
-            bookmarksList.innerHTML = html;
-            
-            // Добавляем обработчики клика на закладки
-            document.querySelectorAll('.bookmark-item').forEach(item => {
-                item.addEventListener('click', function(e) {
-                    if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'I') {
-                        const index = this.getAttribute('data-index');
-                        const bookmark = bookmarks[index];
-                        
-                        // Загружаем закладку
-                        currentState.bookId = bookmark.bookId;
-                        currentState.chapter = bookmark.chapter;
-                        currentState.bookName = bookmark.bookName;
-                        
-                        // Обновляем активную книгу в списке
-                        document.querySelectorAll('.book-item').forEach(bookItem => {
-                            bookItem.classList.remove('active');
-                            if (bookItem.getAttribute('data-id') === bookmark.bookId) {
-                                bookItem.classList.add('active');
-                            }
-                        });
-                        
-                        // Загружаем главу
-                        loadChapter(bookmark.bookId, bookmark.chapter);
-                    }
-                });
-            });
-        }
-        
-        // Функция для удаления закладки
-        function removeBookmark(index) {
-            let bookmarks = JSON.parse(localStorage.getItem('bibleBookmarks')) || [];
-            
-            if (index >= 0 && index < bookmarks.length) {
-                bookmarks.splice(index, 1);
-                localStorage.setItem('bibleBookmarks', JSON.stringify(bookmarks));
-                updateBookmarksList();
-            }
-            
-            // Останавливаем всплытие события, чтобы не triggered переход по закладке
-            event.stopPropagation();
-        }
-        
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем первую главу Матфея
-            loadChapter('mat', 1);
-            
-            // Загружаем закладки
-            updateBookmarksList();
-        });
-    </script>
+  <!-- Кнопка для запуска звона на мобильных -->
+  <button class="bell-btn" id="bellBtn">Звон</button>
+
+  <script>
+    // Попытка автозапуска на десктопе
+    const audio = document.getElementById('bells');
+    const btn = document.getElementById('bellBtn');
+
+    function tryAutoplay() {
+      audio.currentTime = 0;
+      audio.volume = 0.8;
+      audio.play().then(() => {
+        // Если автозапуск разрешён — скрыть кнопку
+        btn.classList.add('hidden');
+      }).catch(() => {
+        // Мобильные браузеры часто требуют жест
+        btn.classList.remove('hidden');
+      });
+    }
+
+    // Запуск при загрузке
+    window.addEventListener('load', tryAutoplay);
+    // Ручной запуск
+    btn.addEventListener('click', () => {
+      audio.currentTime = 0;
+      audio.play();
+      btn.classList.add('hidden');
+    });
+
+    // Мягкое повторение звона (каждые 3 минуты)
+    setInterval(() => {
+      if (!audio.paused) return; // если играет — не вмешиваемся
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }, 180000);
+  </script>
 </body>
 </html>
