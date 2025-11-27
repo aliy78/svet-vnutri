@@ -112,10 +112,9 @@
   </audio>
 
   <!-- Кнопка для запуска звона на мобильных -->
-  <button class="bell-btn" id="bellBtn">Звон</button>
+  <button class="bell-btn" id="bellBtn">🔔 Звон</button>
 
   <script>
-    // Попытка автозапуска на десктопе
     const audio = document.getElementById('bells');
     const btn = document.getElementById('bellBtn');
 
@@ -123,26 +122,23 @@
       audio.currentTime = 0;
       audio.volume = 0.8;
       audio.play().then(() => {
-        // Если автозапуск разрешён — скрыть кнопку
-        btn.classList.add('hidden');
+        btn.classList.add('hidden'); // автозапуск сработал
       }).catch(() => {
-        // Мобильные браузеры часто требуют жест
-        btn.classList.remove('hidden');
+        btn.classList.remove('hidden'); // нужен клик на мобильных
       });
     }
 
-    // Запуск при загрузке
     window.addEventListener('load', tryAutoplay);
-    // Ручной запуск
+
     btn.addEventListener('click', () => {
       audio.currentTime = 0;
       audio.play();
       btn.classList.add('hidden');
     });
 
-    // Мягкое повторение звона (каждые 3 минуты)
+    // Повторение звона каждые 3 минуты
     setInterval(() => {
-      if (!audio.paused) return; // если играет — не вмешиваемся
+      if (!audio.paused) return;
       audio.currentTime = 0;
       audio.play().catch(() => {});
     }, 180000);
