@@ -76,7 +76,6 @@
       to   { transform: scale(1.1); opacity: 0.7; }
     }
 
-    /* Анимация восхода */
     @keyframes sunrise {
       0%   { opacity: 0; transform: scale(0.5); }
       100% { opacity: 1; transform: scale(1); }
@@ -106,13 +105,13 @@
   <div class="halo"></div>
   <div class="orb"></div>
 
-  <!-- Звук: локальный файл assets/bells.mp3 -->
+  <!-- Звук -->
   <audio id="bells" preload="auto">
     <source src="assets/bells.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Кнопка для запуска звона на мобильных -->
-  <button class="bell-btn" id="bellBtn">🔔 Звон</button>
+  <!-- Кнопка для запуска звона -->
+  <button class="bell-btn hidden" id="bellBtn">🔔 Звон</button>
 
   <script>
     const audio = document.getElementById('bells');
@@ -122,9 +121,9 @@
       audio.currentTime = 0;
       audio.volume = 0.8;
       audio.play().then(() => {
-        btn.classList.add('hidden'); // автозапуск сработал
+        btn.classList.add('hidden');
       }).catch(() => {
-        btn.classList.remove('hidden'); // нужен клик на мобильных
+        btn.classList.remove('hidden');
       });
     }
 
